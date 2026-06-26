@@ -13,6 +13,11 @@ This example project includes:
 - TypeScript integration tests using [`node:test`](nodejs.org/api/test.html), the new Node.js native test runner, and [`viem`](https://viem.sh/).
 - Examples demonstrating how to connect to different types of networks, including locally simulating OP mainnet.
 
+## Techinal Decisions
+- **Hardhat 3 + view** - Chosen for native ESM support and compile-time type safety from ABIs.
+- **Solidity tests for unit logic and TypeScript for integration** - Solidity tests run faster and catch contract-level bugs in the EVM. Typescript tests cover the end-to-end flow.
+- **wagmi** + RainbowKit - Industry-standard React stack for wallet connection and contract interaction.
+
 ## Usage
 
 ### Running Tests
