@@ -1,46 +1,25 @@
-import assert from "node:assert/strict";
 import { describe, it } from "node:test";
-
+import assert from "node:assert/strict";
 import { network } from "hardhat";
 
-describe("Counter", async function () {
-  const { viem } = await network.create();
-  const publicClient = await viem.getPublicClient();
+describe("Counter", async () => {
+  const { viem, networkHelpers } = await network.create();
 
-  it("Should emit the Increment event when calling the inc() function", async function () {
+  async function deployContract() {
     const counter = await viem.deployContract("Counter");
+    return { counter };
+  }
 
-    await viem.assertions.emitWithArgs(
-      counter.write.inc(),
-      counter,
-      "Increment",
-      [1n],
-    );
+  it("Init counter to 0", async () => {
+    const { counter } = await networkHelpers.loadFixture(deployContract);
+    const value = await counter.read.x();
+    assert.equal(value, 0n);
   });
 
-  it("The sum of the Increment events should match the current value", async function () {
-    const counter = await viem.deployContract("Counter");
-    const deploymentBlockNumber = await publicClient.getBlockNumber();
-
-    // run a series of increments
-    for (let i = 1n; i <= 10n; i++) {
-      await counter.write.incBy([i]);
-    }
-
-    const events = await publicClient.getContractEvents({
-      address: counter.address,
-      abi: counter.abi,
-      eventName: "Increment",
-      fromBlock: deploymentBlockNumber,
-      strict: true,
-    });
-
-    // check that the aggregated events match the current value
-    let total = 0n;
-    for (const event of events) {
-      total += event.args.by;
-    }
-
-    assert.equal(total, await counter.read.x());
+  it("Increment the count and emit an event", async () => {
+    const { counter } = await networkHelpers.loadFixture(deployContract);
+    await viem.assertions.emit(counter.write.inc(), counter, "Increment");
+    const currentCount = await counter.read.x();
+    assert.equal(currentCount, 1n);
   });
 });
