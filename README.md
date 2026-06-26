@@ -1,61 +1,90 @@
-# Sample Hardhat 3 Project (`node:test` and `viem`)
+# Counter dApp
 
-This project showcases a Hardhat 3 project using the native Node.js test runner (`node:test`) and the `viem` library for Ethereum interactions.
+A full-stack dApp with a Solidity smart contract, Hardhat 3 testing, and a React frontend (wagmi + RainbowKit).
 
-To learn more about Hardhat 3, please visit the [Getting Started guide](https://hardhat.org/docs/getting-started#getting-started-with-hardhat-3). To share your feedback, join our [Hardhat 3](https://hardhat.org/hardhat3-telegram-group) Telegram group or [open an issue](https://github.com/NomicFoundation/hardhat/issues/new) in our GitHub issue tracker.
+## Setup
 
-## Project Overview
+### Prerequisites
 
-This example project includes:
+- Node.js 20+
+- npm
+- Metamask browser extension
 
-- A simple Hardhat configuration file.
-- Foundry-compatible Solidity unit tests.
-- TypeScript integration tests using [`node:test`](nodejs.org/api/test.html), the new Node.js native test runner, and [`viem`](https://viem.sh/).
-- Examples demonstrating how to connect to different types of networks, including locally simulating OP mainnet.
+### Install dependencies
 
-## Techinal Decisions
-- **Hardhat 3 + view** - Chosen for native ESM support and compile-time type safety from ABIs.
-- **Solidity tests for unit logic and TypeScript for integration** - Solidity tests run faster and catch contract-level bugs in the EVM. Typescript tests cover the end-to-end flow.
-- **wagmi** + RainbowKit - Industry-standard React stack for wallet connection and contract interaction.
+```shell
+npm install
+cd frontend && npm install && cd ..
+```
 
-## Usage
+### Start the local Hardhat node
 
-### Running Tests
+```shell
+npx hardhat node
+```
 
-To run all the tests in the project, execute the following command:
+Keep this terminal running.
+
+### Deploy the contract
+
+In a **separate terminal**, run:
+
+```shell
+npx hardhat run scripts/deploy.ts
+```
+
+Copy the deployed address printed to the console.
+
+### Configure the frontend
+
+Open `frontend/src/App.tsx` and update `CONTRACT_ADDRESS` (line 28) with the address from the deploy step.
+
+### Run the frontend
+
+```shell
+cd frontend && npm run dev
+```
+
+Open the URL shown (usually `http://localhost:5173`).
+
+### Connect your wallet
+
+1. In Metamask, add the **Hardhat Local** network:
+   - RPC URL: `http://127.0.0.1:8545`
+   - Chain ID: `31337`
+   - Currency Symbol: `ETH`
+2. Import a Hardhat test account: use private key `0xac0974bec39a17e36ba4a6b4d238ff944bacb478cbed5efcae784d7bf4f2ff80` (10000 ETH)
+3. Connect the wallet to the dApp via the "Connect Wallet" button
+
+---
+
+## Techical Decisions
+- **Hardhat 3 + viem** - Chosen for native ESM support and compile-time type safety from ABIs.
+- **Solidity tests for unit logic and TypeScript for integration** - Solidity tests run faster and catch contract-level bugs in the EVM. TypeScript tests cover the end-to-end flow.
+- **wagmi + RainbowKit** - Industry-standard React stack for wallet connection and contract interaction.
+
+## Testing
 
 ```shell
 npx hardhat test
 ```
 
-You can also selectively run the Solidity or `node:test` tests:
+Selectively run Solidity or TypeScript tests:
 
 ```shell
 npx hardhat test solidity
 npx hardhat test nodejs
 ```
 
-### Make a deployment to Sepolia
+## Deployment to Sepolia
 
-This project includes an example Ignition module to deploy the contract. You can deploy this module to a locally simulated chain or to Sepolia.
-
-To run the deployment to a local chain:
-
-```shell
-npx hardhat ignition deploy ignition/modules/Counter.ts
-```
-
-To run the deployment to Sepolia, you need an account with funds to send the transaction. The provided Hardhat configuration includes a Configuration Variable called `SEPOLIA_PRIVATE_KEY`, which you can use to set the private key of the account you want to use.
-
-You can set the `SEPOLIA_PRIVATE_KEY` variable using the `hardhat-keystore` plugin or by setting it as an environment variable.
-
-To set the `SEPOLIA_PRIVATE_KEY` config variable using `hardhat-keystore`:
+Requires a funded Sepolia account. Set the private key:
 
 ```shell
 npx hardhat keystore set SEPOLIA_PRIVATE_KEY
 ```
 
-After setting the variable, you can run the deployment with the Sepolia network:
+Then deploy:
 
 ```shell
 npx hardhat ignition deploy --network sepolia ignition/modules/Counter.ts
