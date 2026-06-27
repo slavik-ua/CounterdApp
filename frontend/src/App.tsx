@@ -3,8 +3,9 @@ import {
   useWriteContract,
   useWaitForTransactionReceipt,
   useAccount,
+  useConnect,
+  useDisconnect,
 } from "wagmi";
-import { ConnectButton } from "@rainbow-me/rainbowkit";
 import { useEffect } from "react";
 
 const CONTRACT_ABI = [
@@ -28,9 +29,15 @@ const CONTRACT_ADDRESS =
   "0x5fbdb2315678afecb367f032d93f642f64180aa3" as `0x${string}`;
 
 function App() {
-  const { isConnected } = useAccount();
+  const { isConnected, address } = useAccount();
+  const { connect, connectors } = useConnect();
+  const { disconnect } = useDisconnect();
 
-  const { data: count, refetch } = useReadContract({
+  const {
+    data: count,
+    refetch,
+    error: readError,
+  } = useReadContract({
     address: CONTRACT_ADDRESS,
     abi: CONTRACT_ABI,
     functionName: "x",
@@ -61,7 +68,18 @@ function App() {
     <div style={{ padding: "40px", fontFamily: "sans-serif" }}>
       <h1>Counter DApp</h1>
 
-      <ConnectButton />
+      {isConnected ? (
+        <div>
+          <p>
+            Connected: {address?.slice(0, 6)}...{address?.slice(-4)}
+          </p>
+          <button onClick={() => disconnect()}>Disconnect</button>
+        </div>
+      ) : (
+        <button onClick={() => connect({ connector: connectors[0] })}>
+          Connect Wallet
+        </button>
+      )}
 
       {isConnected ? (
         <div style={{ marginTop: "30px" }}>
@@ -72,6 +90,10 @@ function App() {
               {count !== undefined ? count.toString() : "Loading"}
             </strong>
           </p>
+
+          {readError && (
+            <p style={{ color: "red" }}>Read Error: {readError.message}</p>
+          )}
 
           <button
             disabled={isPending || isConfirming}
@@ -86,7 +108,6 @@ function App() {
               ? "Confirming in Wallet"
               : "Increment Counter"}
           </button>
-
           {hash && (
             <p style={{ fontSize: "14px", color: "gray" }}>Tx Hash: {hash}</p>
           )}
@@ -98,7 +119,7 @@ function App() {
           )}
           {error && (
             <p style={{ color: "red" }}>
-              Error: {error.shortMessage || error.message}
+              Error: {error?.message || "Unknown error"}
             </p>
           )}
         </div>
