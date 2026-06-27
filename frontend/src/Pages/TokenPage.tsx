@@ -7,16 +7,7 @@ import {
 import { useState } from "react";
 
 const TOKEN_ABI = [
-  {
-    type: "function",
-    name: "mint",
-    inputs: [
-      { internalType: "address", name: "to", type: "address" },
-      { internalType: "uint256", name: "amount", type: "uint256" },
-    ],
-    outputs: [],
-    stateMutability: "nonpayable",
-  },
+  // Variables
   {
     type: "function",
     name: "balanceOf",
@@ -44,6 +35,28 @@ const TOKEN_ABI = [
     inputs: [],
     outputs: [{ internalType: "string", name: "", type: "string" }],
     stateMutability: "view",
+  },
+
+  // Methods
+  {
+    type: "function",
+    name: "mint",
+    inputs: [
+      { internalType: "address", name: "to", type: "address" },
+      { internalType: "uint256", name: "amount", type: "uint256" },
+    ],
+    outputs: [],
+    stateMutability: "nonpayable",
+  },
+  {
+    type: "function",
+    name: "transfer",
+    inputs: [
+      { internalType: "address", name: "to", type: "address" },
+      { internalType: "uint256", name: "amount", type: "uint256" },
+    ],
+    outputs: [],
+    stateMutability: "nonpayable",
   },
 ];
 
