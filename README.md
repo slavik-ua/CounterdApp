@@ -40,7 +40,13 @@ In a **separate terminal**, deploy each contract:
 npx hardhat run scripts/deploy.ts --network localhost
 ```
 
-Copy the printed addresses and update them in `frontend/src/Pages/CounterPage.tsx` and `frontend/src/Pages/TokenPage.tsx`.
+If they are different from
+`0x5fbdb2315678afecb367f032d93f642f64180aa3`
+`0xe7f1725e7734ce288f8367e1bb143e90bb3f0512`
+
+Copy the printed addresses and update them in `frontend/src/Pages/CounterPage.tsx`. The Token hash **can be updated in the UI** or in the `frontend/src/Pages/CounterPage.tsx`.
+
+**TODO:** Make the input fields for Counter.
 
 ### Run the frontend
 
@@ -80,9 +86,3 @@ Selectively run Solidity or TypeScript tests:
 npx hardhat test solidity
 npx hardhat test nodejs
 ```
-
-## Future Directions
-
-- **Full ERC20** — Add `approve()` + `transferFrom()` + `Approval` event to enable third-party token transfers (DEX, marketplace patterns).
-- **OpenZeppelin** — Replace custom token with `@openzeppelin/contracts` ERC20 for production-ready security.
-- **Multi-page frontend** — Use react-router-dom for proper URL-based navigation instead of state tabs.

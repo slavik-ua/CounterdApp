@@ -6,7 +6,7 @@ import {
 import { useEffect } from "react";
 
 const CONTRACT_ABI = [
-  // Variables
+  // --- Variables ---
   {
     type: "function",
     name: "x",
@@ -15,7 +15,7 @@ const CONTRACT_ABI = [
     stateMutability: "view",
   },
 
-  // Methods
+  // --- Methods ---
   {
     type: "function",
     name: "inc",
@@ -25,6 +25,7 @@ const CONTRACT_ABI = [
   },
 ] as const;
 
+// Default address from Hardhat node
 const CONTRACT_ADDRESS =
   "0x5fbdb2315678afecb367f032d93f642f64180aa3" as `0x${string}`;
 

@@ -4,10 +4,10 @@ import {
   useWaitForTransactionReceipt,
   useAccount,
 } from "wagmi";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 const TOKEN_ABI = [
-  // Variables
+  // --- Variables ---
   {
     type: "function",
     name: "balanceOf",
@@ -37,7 +37,7 @@ const TOKEN_ABI = [
     stateMutability: "view",
   },
 
-  // Methods
+  // --- Methods ---
   {
     type: "function",
     name: "mint",
@@ -62,6 +62,7 @@ const TOKEN_ABI = [
 
 function TokenPage() {
   const { address } = useAccount();
+  // Default address from hardhat node
   const [tokenAddress, setTokenAddress] = useState(
     "0xe7f1725e7734ce288f8367e1bb143e90bb3f0512",
   );
@@ -75,7 +76,10 @@ function TokenPage() {
     query: { enabled: !!tokenAddress && !!address },
   });
 
+  // Blockchain listener. The writeContract function is needed to interract with the wallet
   const { data: hash, writeContract, isPending, error } = useWriteContract();
+
+  // Check when transaction changes status. We then can check isLoading if the transaction is still processing and isSuccess if it is done
   const { isLoading: isConfirming, isSuccess: isConfirmed } =
     useWaitForTransactionReceipt({ hash });
 
@@ -89,7 +93,9 @@ function TokenPage() {
     });
   };
 
-  if (isConfirmed) refetch();
+  useEffect(() => {
+    if (isConfirmed) refetch();
+  }, [isConfirmed, refetch]);
 
   return (
     <div style={{ padding: "40px", fontFamily: "sans-serif" }}>
