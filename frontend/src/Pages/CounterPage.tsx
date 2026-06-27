@@ -7,18 +7,18 @@ import { useEffect } from "react";
 
 const CONTRACT_ABI = [
   {
-    inputs: [],
+    type: "function",
     name: "inc",
+    inputs: [],
     outputs: [],
     stateMutability: "nonpayable",
-    type: "function",
   },
   {
-    inputs: [],
+    type: "function",
     name: "x",
+    inputs: [],
     outputs: [{ internalType: "uint256", name: "", type: "uint256" }],
     stateMutability: "view",
-    type: "function",
   },
 ] as const;
 
