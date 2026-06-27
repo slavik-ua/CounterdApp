@@ -13,6 +13,7 @@ function App() {
   return (
     <div style={{ padding: "40px", fontFamily: "sans-serif" }}>
       <h1>Universal DApp</h1>
+      <h3>The power of the blockchain</h3>
 
       {isConnected ? (
         <div>

@@ -23,6 +23,13 @@ const CONTRACT_ABI = [
     outputs: [],
     stateMutability: "nonpayable",
   },
+  {
+    type: "function",
+    name: "dec",
+    inputs: [],
+    outputs: [],
+    stateMutability: "nonpayable",
+  },
 ] as const;
 
 // Default address from Hardhat node
@@ -64,18 +71,33 @@ function CounterPage() {
         <p style={{ color: "red" }}>Read Error: {readError.message}</p>
       )}
 
-      <button
-        disabled={isPending || isConfirming}
-        onClick={() =>
-          writeContract({
-            address: CONTRACT_ADDRESS,
-            abi: CONTRACT_ABI,
-            functionName: "inc",
-          })
-        }
-      >
-        {isPending || isConfirming ? "Confirming" : "Increment"}
-      </button>
+      <div style={{ display: "flex", justifyContent: "center", gap: "10px" }}>
+        <button
+          disabled={isPending || isConfirming}
+          onClick={() =>
+            writeContract({
+              address: CONTRACT_ADDRESS,
+              abi: CONTRACT_ABI,
+              functionName: "inc",
+            })
+          }
+        >
+          {isPending || isConfirming ? "Confirming" : "Increment"}
+        </button>
+
+        <button
+          disabled={isPending || isConfirming || count?.toString() === "0"}
+          onClick={() =>
+            writeContract({
+              address: CONTRACT_ADDRESS,
+              abi: CONTRACT_ABI,
+              functionName: "dec",
+            })
+          }
+        >
+          {isPending || isConfirming ? "Confirming" : "Decrement"}
+        </button>
+      </div>
 
       {hash && <p style={{ fontSize: "14px" }}>Tx: {hash}</p>}
       {isConfirming && <p>Waiting</p>}
