@@ -1,133 +1,63 @@
-import {
-  useReadContract,
-  useWriteContract,
-  useWaitForTransactionReceipt,
-  useAccount,
-  useConnect,
-  useDisconnect,
-} from "wagmi";
-import { useEffect } from "react";
-
-const CONTRACT_ABI = [
-  {
-    inputs: [],
-    name: "inc",
-    outputs: [],
-    stateMutability: "nonpayable",
-    type: "function",
-  },
-  {
-    inputs: [],
-    name: "x",
-    outputs: [{ internalType: "uint256", name: "", type: "uint256" }],
-    stateMutability: "view",
-    type: "function",
-  },
-] as const;
-
-const CONTRACT_ADDRESS =
-  "0x5fbdb2315678afecb367f032d93f642f64180aa3" as `0x${string}`;
+import { useState } from "react";
+import { useAccount, useConnect, useDisconnect } from "wagmi";
+import { injected } from "wagmi/connectors";
+import CounterPage from "./Pages/CounterPage";
+import TokenPage from "./Pages/TokenPage";
 
 function App() {
   const { isConnected, address } = useAccount();
-  const { connect, connectors } = useConnect();
+  const { connect } = useConnect();
   const { disconnect } = useDisconnect();
-
-  const {
-    data: count,
-    refetch,
-    error: readError,
-  } = useReadContract({
-    address: CONTRACT_ADDRESS,
-    abi: CONTRACT_ABI,
-    functionName: "x",
-  });
-
-  const { data: hash, writeContract, isPending, error } = useWriteContract();
-
-  const { isLoading: isConfirming, isSuccess: isConfirmed } =
-    useWaitForTransactionReceipt({
-      hash,
-    });
-
-  useEffect(() => {
-    if (isConfirmed) {
-      refetch();
-    }
-  }, [isConfirmed, refetch]);
-
-  const handleIncrement = () => {
-    writeContract({
-      address: CONTRACT_ADDRESS,
-      abi: CONTRACT_ABI,
-      functionName: "inc",
-    });
-  };
+  const [page, setPage] = useState<"counter" | "token">("counter");
 
   return (
     <div style={{ padding: "40px", fontFamily: "sans-serif" }}>
-      <h1>Counter DApp</h1>
+      <h1>DApp</h1>
 
       {isConnected ? (
         <div>
           <p>
             Connected: {address?.slice(0, 6)}...{address?.slice(-4)}
           </p>
-          <button onClick={() => disconnect()}>Disconnect</button>
+          <button
+            onClick={() => {
+              disconnect();
+            }}
+          >
+            Disconnect
+          </button>
         </div>
       ) : (
-        <button onClick={() => connect({ connector: connectors[0] })}>
+        <button onClick={() => connect({ connector: injected() })}>
           Connect Wallet
         </button>
       )}
 
-      {isConnected ? (
-        <div style={{ marginTop: "30px" }}>
-          <h3>Contract Interaction</h3>
-          <p>
-            Current Counter Value:{" "}
-            <strong>
-              {count !== undefined ? count.toString() : "Loading"}
-            </strong>
-          </p>
+      <nav
+        style={{
+          display: "flex",
+          justifyContent: "center",
+          gap: "10px",
+          margin: "20px",
+        }}
+      >
+        <button
+          onClick={() => setPage("counter")}
+          style={{
+            fontWeight: page === "counter" ? "bold" : "normal",
+          }}
+        >
+          Counter
+        </button>
+        <button
+          onClick={() => setPage("token")}
+          style={{ fontWeight: page === "token" ? "bold" : "normal" }}
+        >
+          Token
+        </button>
+      </nav>
 
-          {readError && (
-            <p style={{ color: "red" }}>Read Error: {readError.message}</p>
-          )}
-
-          <button
-            disabled={isPending || isConfirming}
-            onClick={handleIncrement}
-            style={{
-              padding: "10px 20px",
-              fontSize: "16px",
-              cursor: "pointer",
-            }}
-          >
-            {isPending || isConfirming
-              ? "Confirming in Wallet"
-              : "Increment Counter"}
-          </button>
-          {hash && (
-            <p style={{ fontSize: "14px", color: "gray" }}>Tx Hash: {hash}</p>
-          )}
-          {isConfirming && <p>Waiting for network confirmation...</p>}
-          {isConfirmed && (
-            <p style={{ color: "green" }}>
-              Transaction confirmed! Counter updated.
-            </p>
-          )}
-          {error && (
-            <p style={{ color: "red" }}>
-              Error: {error?.message || "Unknown error"}
-            </p>
-          )}
-        </div>
-      ) : (
-        <p style={{ marginTop: "20px" }}>
-          Please connect your wallet to interact with the contract.
-        </p>
-      )}
+      {page === "counter" ? <CounterPage /> : <TokenPage />}
     </div>
   );
 }
