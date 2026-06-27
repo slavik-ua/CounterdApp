@@ -1,6 +1,6 @@
 # Counter dApp
 
-A full-stack dApp with a Solidity smart contract, Hardhat 3 testing, and a React frontend (wagmi + RainbowKit).
+A full-stack dApp with a Solidity smart contract, Hardhat 3 testing, and a React frontend (wagmi).
 
 ## Setup
 
@@ -30,7 +30,7 @@ Keep this terminal running.
 In a **separate terminal**, run:
 
 ```shell
-npx hardhat run scripts/deploy.ts
+npx hardhat run scripts/deploy.ts --network localhost
 ```
 
 Copy the deployed address printed to the console.
@@ -54,14 +54,14 @@ Open the URL shown (usually `http://localhost:5173`).
    - Chain ID: `31337`
    - Currency Symbol: `ETH`
 2. Import a Hardhat test account: use private key `0xac0974bec39a17e36ba4a6b4d238ff944bacb478cbed5efcae784d7bf4f2ff80` (10000 ETH)
-3. Connect the wallet to the dApp via the "Connect Wallet" button
+3. Click "Connect Wallet" in the dApp and approve in Metamask
 
 ---
 
-## Techical Decisions
+## Technical Decisions
 - **Hardhat 3 + viem** - Chosen for native ESM support and compile-time type safety from ABIs.
 - **Solidity tests for unit logic and TypeScript for integration** - Solidity tests run faster and catch contract-level bugs in the EVM. TypeScript tests cover the end-to-end flow.
-- **wagmi + RainbowKit** - Industry-standard React stack for wallet connection and contract interaction.
+- **wagmi** - Industry-standard React library for wallet connection and contract interaction.
 
 ## Testing
 
