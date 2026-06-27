@@ -1,6 +1,13 @@
-# Counter dApp
+# dApp
 
-A full-stack dApp with a Solidity smart contract, Hardhat 3 testing, and a React frontend (wagmi).
+A full-stack dApp with Solidity smart contracts, Hardhat 3 testing, and a React frontend (wagmi).
+
+## Contracts
+
+| Contract | File | Description |
+|----------|------|-------------|
+| **Counter** | `contracts/Counter.sol` | Simple counter with `inc()` and `incBy()`, emits `Increment` event |
+| **Token** | `contracts/Token.sol` | Custom ERC20-like token with `mint` (owner-only), `transfer`, `balanceOf` |
 
 ## Setup
 
@@ -25,19 +32,15 @@ npx hardhat node
 
 Keep this terminal running.
 
-### Deploy the contract
+### Deploy the contracts
 
-In a **separate terminal**, run:
+In a **separate terminal**, deploy each contract:
 
 ```shell
 npx hardhat run scripts/deploy.ts --network localhost
 ```
 
-Copy the deployed address printed to the console.
-
-### Configure the frontend
-
-Open `frontend/src/App.tsx` and update `CONTRACT_ADDRESS` (line 28) with the address from the deploy step.
+Copy the printed addresses and update them in `frontend/src/Pages/CounterPage.tsx` and `frontend/src/Pages/TokenPage.tsx`.
 
 ### Run the frontend
 
@@ -55,13 +58,15 @@ Open the URL shown (usually `http://localhost:5173`).
    - Currency Symbol: `ETH`
 2. Import a Hardhat test account: use private key `0xac0974bec39a17e36ba4a6b4d238ff944bacb478cbed5efcae784d7bf4f2ff80` (10000 ETH)
 3. Click "Connect Wallet" in the dApp and approve in Metamask
+4. Use the **Counter** tab to increment the counter, or the **Token** tab to mint tokens
 
 ---
 
 ## Technical Decisions
-- **Hardhat 3 + viem** - Chosen for native ESM support and compile-time type safety from ABIs.
-- **Solidity tests for unit logic and TypeScript for integration** - Solidity tests run faster and catch contract-level bugs in the EVM. TypeScript tests cover the end-to-end flow.
-- **wagmi** - Industry-standard React library for wallet connection and contract interaction.
+
+- **Honest Reflection**: As I mentioned in my application email, I am new to Web3 and have used generative AI to help me understand how to build dApps. While AI helped me, I understand the flow from Hardhat local node to the Wagmi frontend.
+- **Hardhat + Typescript**: Used to compile contracts, deploy them and run tests.
+- **wagmi**: Chosen as the library to handle wallet connection.
 
 ## Testing
 
@@ -76,16 +81,8 @@ npx hardhat test solidity
 npx hardhat test nodejs
 ```
 
-## Deployment to Sepolia
+## Future Directions
 
-Requires a funded Sepolia account. Set the private key:
-
-```shell
-npx hardhat keystore set SEPOLIA_PRIVATE_KEY
-```
-
-Then deploy:
-
-```shell
-npx hardhat ignition deploy --network sepolia ignition/modules/Counter.ts
-```
+- **Full ERC20** — Add `approve()` + `transferFrom()` + `Approval` event to enable third-party token transfers (DEX, marketplace patterns).
+- **OpenZeppelin** — Replace custom token with `@openzeppelin/contracts` ERC20 for production-ready security.
+- **Multi-page frontend** — Use react-router-dom for proper URL-based navigation instead of state tabs.
