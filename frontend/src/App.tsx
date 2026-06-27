@@ -12,7 +12,7 @@ function App() {
 
   return (
     <div style={{ padding: "40px", fontFamily: "sans-serif" }}>
-      <h1>DApp</h1>
+      <h1>Universal DApp</h1>
 
       {isConnected ? (
         <div>

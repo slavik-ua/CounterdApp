@@ -5,6 +5,7 @@ contract Counter {
   uint public x;
 
   event Increment(uint by);
+  event Decrement(uint by);
 
   function inc() public {
     x++;
@@ -15,5 +16,24 @@ contract Counter {
     require(by > 0, "incBy: increment should be positive");
     x += by;
     emit Increment(by);
+  }
+
+  function dec() public {
+    if (x - 1 == 0) {
+        x = 0;
+    } else {
+        x--;
+    }
+    emit Decrement(1);
+  }
+
+  function decBy(uint by) public {
+    require(by > 0, "incBy: increment should be positive");
+    if (x < by) {
+        x = 0;
+    } else {
+        x -= by;
+        emit Decrement(by);
+    }
   }
 }

@@ -26,4 +26,28 @@ contract CounterTest is Test {
     vm.expectRevert();
     counter.incBy(0);
   }
+
+  function test_LoopDecrement() public {
+    // Write 100 to the Counter variable
+    vm.store(address(counter), bytes32(uint256(0)), bytes32(uint256(100)));
+
+
+    assertEq(counter.x(), 100);
+
+    for (uint256 i = 0; i < 50; i++) {
+        counter.dec();
+    }
+
+    assertEq(counter.x(), 50);
+
+    for (uint256 i = 0; i < 50; i++) {
+        counter.dec();
+    }
+
+    assertEq(counter.x(), 0);
+
+    // expectRevert checks validity of the next call
+    vm.expectRevert();
+    counter.dec();
+  }
 }
