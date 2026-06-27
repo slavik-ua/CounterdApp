@@ -13,7 +13,7 @@ A full-stack dApp with Solidity smart contracts, Hardhat 3 testing, and a React 
 
 ### Prerequisites
 
-- Node.js 20+
+- Node.js 22+
 - npm
 - Metamask browser extension
 
@@ -46,8 +46,6 @@ If they are different from
 
 Copy the printed addresses and update them in `frontend/src/Pages/CounterPage.tsx`. The Token hash **can be updated in the UI** or in the `frontend/src/Pages/CounterPage.tsx`.
 
-**TODO:** Make the input fields for Counter.
-
 ### Run the frontend
 
 ```shell
@@ -70,9 +68,9 @@ Open the URL shown (usually `http://localhost:5173`).
 
 ## Technical Decisions
 
-- **Honest Reflection**: As I mentioned in my application email, I am new to Web3 and have used generative AI to help me understand how to build dApps. While AI helped me, I understand the flow from Hardhat local node to the Wagmi frontend.
-- **Hardhat + Typescript**: Used to compile contracts, deploy them and run tests.
-- **wagmi**: Chosen as the library to handle wallet connection.
+- **Honest Reflection**: As I mentioned in my application email, I am new to Web3 and have used generative AI to help me understand how to build dApps and how they work. While AI helped me, I understand the flow from Hardhat local node to the Wagmi frontend and can explain the code.
+- **Hardhat + Typescript**: Were chosen because of the amount of information avaialable and strict typesafety which allows for early bug detection. Hardhat is a popular tool to compile contracts, deploy them on the local test network and run solidity tests.
+- **wagmi**: Chosen as the popular library to handle wallet connection in the frontend.
 
 ## Testing
 
