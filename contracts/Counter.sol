@@ -19,11 +19,8 @@ contract Counter {
   }
 
   function dec() public {
-    if (x - 1 == 0) {
-        x = 0;
-    } else {
-        x--;
-    }
+    require(x > 0, "dec: should be greater than 0, otherwise underflow");
+    x--;
     emit Decrement(1);
   }
 
