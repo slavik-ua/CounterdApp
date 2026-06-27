@@ -28,7 +28,7 @@ contract CounterTest is Test {
   }
 
   function test_LoopDecrement() public {
-    // Write 100 to the Counter variable
+    // Write 100 to the variable x in Counter object
     vm.store(address(counter), bytes32(uint256(0)), bytes32(uint256(100)));
 
 

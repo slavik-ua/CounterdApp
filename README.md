@@ -68,7 +68,7 @@ Open the URL shown (usually `http://localhost:5173`).
 
 ## Technical Decisions
 
-- **Honest Reflection**: As I mentioned in my application email, I am new to Web3 and have used generative AI to help me understand how to build dApps and how they work. While AI helped me, I understand the flow from Hardhat local node to the Wagmi frontend and can explain the code.
+- **Honest Reflection**: As I mentioned in my application email, I am new to Web3 and have used generative AI to help me understand how to build dApps and how they work. While AI helped me learn solidity and concepts, I was learning and understand the flow from Hardhat local node to the Wagmi frontend, and can explain the code.
 - **Hardhat + Typescript**: Were chosen because of the amount of information avaialable and strict typesafety which allows for early bug detection. Hardhat is a popular tool to compile contracts, deploy them on the local test network and run solidity tests.
 - **wagmi**: Chosen as the popular library to handle wallet connection in the frontend.
 
