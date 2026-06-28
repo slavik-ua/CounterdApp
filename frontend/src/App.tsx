@@ -16,7 +16,7 @@ function App() {
       <h3>You can do anything with the blockchain</h3>
 
       {isConnected ? (
-        <div>
+        <div style={{ display: "flex", justifyContent: "center", gap: "10px" }}>
           <p>
             Connected: {address?.slice(0, 6)}...{address?.slice(-4)}
           </p>
@@ -71,12 +71,15 @@ function App() {
           padding: "20px",
         }}
       >
-        <h3>Useful tips for users:</h3>
-        <ol>
+        <h3>Security tips for users:</h3>
+        <ol style={{ color: "red" }}>
           <li>
-            Be careful about the clipping attack. The attack hackers use to
-            change your the wallet address after you copy it to your clipboard.
-            Always check if the <strong>wallet address</strong> is correct.
+            Be careful about the clipboard hijacking. The attack malware uses to
+            change the wallet address you copy to your clipboard.
+            <strong style={{ color: "white" }}>
+              Always check if the wallet address is correct.
+            </strong>
+            Checking only first and last symbols is not enough.
           </li>
         </ol>
       </div>

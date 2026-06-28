@@ -15,7 +15,11 @@ function TokenPage() {
   );
   const [mintAmount, setMintAmount] = useState("");
 
-  const { data: balance, refetch } = useReadContract({
+  const {
+    data: balance,
+    refetch,
+    error: readError,
+  } = useReadContract({
     address: tokenAddress as `0x${string}`,
     abi: abi,
     functionName: "balanceOf",
@@ -54,12 +58,17 @@ function TokenPage() {
         <p>Balance: Unknown</p>
       )}
 
+      {readError && (
+        <p style={{ color: "red" }}>Read Error: {readError.message}</p>
+      )}
+
       <div
         style={{
           display: "flex",
-          justifyContent: "center",
+          flexDirection: "column",
+          width: "40%",
           gap: "10px",
-          margin: "10px",
+          margin: "10px auto",
         }}
       >
         <input
@@ -70,6 +79,7 @@ function TokenPage() {
         <input
           placeholder="Amount"
           value={mintAmount}
+          type="number"
           onChange={(e) => setMintAmount(e.target.value)}
         />
       </div>

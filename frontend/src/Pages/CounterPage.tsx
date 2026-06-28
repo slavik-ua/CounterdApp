@@ -46,6 +46,15 @@ function CounterPage() {
         <p style={{ color: "red" }}>Read Error: {readError.message}</p>
       )}
 
+      <input
+        placeholder="Counter address"
+        value={counterAddress}
+        style={{ width: "40%" }}
+        onChange={(e) => {
+          setCounterAddress(e.target.value);
+        }}
+      />
+
       <div
         style={{
           display: "flex",
@@ -54,14 +63,6 @@ function CounterPage() {
           margin: "10px",
         }}
       >
-        <input
-          placeholder="Counter address"
-          value={counterAddress}
-          onChange={(e) => {
-            setCounterAddress(e.target.value);
-          }}
-        />
-
         <button
           disabled={isPending || isConfirming}
           onClick={() =>
