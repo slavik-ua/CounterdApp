@@ -17,7 +17,7 @@ function App() {
 
       {isConnected ? (
         <div style={{ display: "flex", justifyContent: "center", gap: "10px" }}>
-          <p>
+          <p title={address}>
             Connected: {address?.slice(0, 6)}...{address?.slice(-4)}
           </p>
           <button
