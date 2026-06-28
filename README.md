@@ -61,7 +61,7 @@ Open the URL shown (usually `http://localhost:5173`).
 
 ## Technical Decisions
 
-- **Honest Reflection**: As I mentioned in my application email, I am new to Web3 and have used generative AI to help me understand how to build dApps and how they work. While AI helped me learn dApp concepts, **I was writing the code. I was learning and now I understand the flow from Hardhat local node to the Wagmi frontend, and can explain the code.**
+- **Learning Process**: As I mentioned in my application email, I am new to blockchain development and have used llms to help me understand dApp concepts and how they work. While it helped me learn dApp concepts, **I was writing the code. Through 24 commits, I was learning and now I understand the flow from Hardhat local node to the Wagmi frontend, and can explain and defend the code.**
 - **Hardhat + Typescript**: Were chosen because of the amount of information avaialable and strict typesafety which allows for early bug detection. Hardhat is a popular tool to compile contracts, deploy them on the local test network and run solidity tests.
 - **Vite and React**: Were chosed for the frontend because they are the most popular and have the most documentation available on them.
 - **wagmi**: Chosen as the popular library to handle wallet connection to the frontend.
