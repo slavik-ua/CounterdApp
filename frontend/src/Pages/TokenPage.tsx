@@ -6,63 +6,10 @@ import {
 } from "wagmi";
 import { useEffect, useState } from "react";
 
-const TOKEN_ABI = [
-  // --- Variables ---
-  {
-    type: "function",
-    name: "balanceOf",
-    inputs: [{ internalType: "address", name: "", type: "address" }],
-    outputs: [{ internalType: "uint256", name: "", type: "uint256" }],
-    stateMutability: "view",
-  },
-  {
-    type: "function",
-    name: "totalSuply",
-    inputs: [],
-    outputs: [{ internalType: "uint256", name: "", type: "uint256" }],
-    stateMutability: "view",
-  },
-  {
-    type: "function",
-    name: "name",
-    inputs: [],
-    outputs: [{ internalType: "string", name: "", type: "string" }],
-    stateMutability: "view",
-  },
-  {
-    type: "function",
-    name: "symbol",
-    inputs: [],
-    outputs: [{ internalType: "string", name: "", type: "string" }],
-    stateMutability: "view",
-  },
-
-  // --- Methods ---
-  {
-    type: "function",
-    name: "mint",
-    inputs: [
-      { internalType: "address", name: "to", type: "address" },
-      { internalType: "uint256", name: "amount", type: "uint256" },
-    ],
-    outputs: [],
-    stateMutability: "nonpayable",
-  },
-  {
-    type: "function",
-    name: "transfer",
-    inputs: [
-      { internalType: "address", name: "to", type: "address" },
-      { internalType: "uint256", name: "amount", type: "uint256" },
-    ],
-    outputs: [],
-    stateMutability: "nonpayable",
-  },
-];
+import { abi } from "../../../artifacts/contracts/Token.sol/Token.json";
 
 function TokenPage() {
   const { address } = useAccount();
-  // Default address from hardhat node
   const [tokenAddress, setTokenAddress] = useState(
     "0xe7f1725e7734ce288f8367e1bb143e90bb3f0512",
   );
@@ -70,7 +17,7 @@ function TokenPage() {
 
   const { data: balance, refetch } = useReadContract({
     address: tokenAddress as `0x${string}`,
-    abi: TOKEN_ABI,
+    abi: abi,
     functionName: "balanceOf",
     args: [address!],
     query: { enabled: !!tokenAddress && !!address },
@@ -87,7 +34,7 @@ function TokenPage() {
     if (!tokenAddress || !mintAmount || !address) return;
     writeContract({
       address: tokenAddress as `0x${string}`,
-      abi: TOKEN_ABI,
+      abi: abi,
       functionName: "mint",
       args: [address, BigInt(mintAmount)],
     });
@@ -140,6 +87,19 @@ function TokenPage() {
       {error && (
         <p style={{ color: "red" }}>Error: {error.message || "Unknown"}</p>
       )}
+
+      <p
+        style={{
+          color: "red",
+          marginTop: "20px",
+          fontSize: "0.8rem",
+          border: "1px solid gray",
+        }}
+      >
+        Be careful about the clipping attack. The attack hackers use to change
+        your the wallet address after you copy it to your clipboard. Always
+        check if the <strong>wallet address</strong> is correct.
+      </p>
     </div>
   );
 }
