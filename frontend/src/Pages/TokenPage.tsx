@@ -48,6 +48,12 @@ function TokenPage() {
     <div style={{ padding: "40px", fontFamily: "sans-serif" }}>
       <h3>Token Minting</h3>
 
+      {balance !== undefined ? (
+        <p>Balance: {balance?.toString()}</p>
+      ) : (
+        <p>Balance: Unknown</p>
+      )}
+
       <div
         style={{
           display: "flex",
@@ -68,12 +74,6 @@ function TokenPage() {
         />
       </div>
 
-      {balance !== undefined ? (
-        <p>Balance: {balance?.toString()}</p>
-      ) : (
-        <p>Balance: Unknown</p>
-      )}
-
       <button
         disabled={isPending || isConfirming || !tokenAddress || !mintAmount}
         onClick={handleMint}
@@ -87,19 +87,6 @@ function TokenPage() {
       {error && (
         <p style={{ color: "red" }}>Error: {error.message || "Unknown"}</p>
       )}
-
-      <p
-        style={{
-          color: "red",
-          marginTop: "20px",
-          fontSize: "0.8rem",
-          border: "1px solid gray",
-        }}
-      >
-        Be careful about the clipping attack. The attack hackers use to change
-        your the wallet address after you copy it to your clipboard. Always
-        check if the <strong>wallet address</strong> is correct.
-      </p>
     </div>
   );
 }

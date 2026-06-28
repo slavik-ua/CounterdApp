@@ -59,6 +59,27 @@ function App() {
       </nav>
 
       {page === "counter" ? <CounterPage /> : <TokenPage />}
+
+      <div
+        style={{
+          position: "fixed",
+          bottom: "2%",
+          width: "40%",
+          textAlign: "left",
+          fontSize: "0.8rem",
+          border: "1px solid gray",
+          padding: "20px",
+        }}
+      >
+        <h3>Useful tips for users:</h3>
+        <ol>
+          <li>
+            Be careful about the clipping attack. The attack hackers use to
+            change your the wallet address after you copy it to your clipboard.
+            Always check if the <strong>wallet address</strong> is correct.
+          </li>
+        </ol>
+      </div>
     </div>
   );
 }

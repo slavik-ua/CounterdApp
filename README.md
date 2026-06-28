@@ -39,7 +39,7 @@ Counter contract successfully deployed to: 0x5fbdb2315678afecb367f032d93f642f641
 Token deployed to 0xe7f1725e7734ce288f8367e1bb143e90bb3f0512
 ```
 
-Copy the printed addresses and update it in `frontend/src/Pages/CounterPage.tsx`. The Token hash **can be updated in the UI** or in the `frontend/src/Pages/TokenPage.tsx`.
+You can update the address in the UI. Or change default values in `frontend/src/Pages/CounterPage.tsx` and `frontend/src/Pages/TokenPage.tsx`.
 
 ### Run the frontend
 
@@ -63,7 +63,7 @@ Open the URL shown (usually `http://localhost:5173`).
 
 ## Technical Decisions
 
-- **Learning Process**: As I mentioned in my application email, I am new to blockchain development and have used llms to help me understand dApp concepts and how they work. While it helped me learn dApp concepts, **I was writing the code. Through 27 commits, I was learning and now I understand the flow from Hardhat local node to the Wagmi frontend, and can explain and defend the code.**
+- **Learning Process**: As I mentioned in my application email, I am new to blockchain development and have used llms to help me understand dApp concepts and how they work. While it helped me learn dApp concepts, **I was writing the code. Through 28 commits, I was learning and now I understand the flow from Hardhat local node to the Wagmi frontend, and can explain and defend the code.**
 - **Hardhat + Typescript**: While Foundry is a better fit for its speed as it is written in Rust, I chose Hardhat because of the JavaScript ecosystem. TypeScript was selected for strict typesafety which allows for early bug detection. I plan to learn and use Foundry in the future.
 - **Vite and React**: Were chosen for the frontend because they are the most efficient frontend tools with the most documentation available on them.
 - **wagmi and viem**: Chosen as the industry standard libraries to handle wallet connection and interaction from the frontend.

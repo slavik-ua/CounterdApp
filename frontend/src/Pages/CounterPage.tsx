@@ -3,21 +3,21 @@ import {
   useWriteContract,
   useWaitForTransactionReceipt,
 } from "wagmi";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 
 import { abi } from "../../../artifacts/contracts/Counter.sol/Counter.json";
 
-// Default address from Hardhat node
-const CONTRACT_ADDRESS =
-  "0x5fbdb2315678afecb367f032d93f642f64180aa3" as `0x${string}`;
-
 function CounterPage() {
+  const [counterAddress, setCounterAddress] = useState(
+    "0x5fbdb2315678afecb367f032d93f642f64180aa3",
+  );
+
   const {
     data: count,
     refetch,
     error: readError,
   } = useReadContract({
-    address: CONTRACT_ADDRESS,
+    address: counterAddress as `0x${string}`,
     abi: abi,
     functionName: "x",
   });
@@ -46,12 +46,27 @@ function CounterPage() {
         <p style={{ color: "red" }}>Read Error: {readError.message}</p>
       )}
 
-      <div style={{ display: "flex", justifyContent: "center", gap: "10px" }}>
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "center",
+          gap: "10px",
+          margin: "10px",
+        }}
+      >
+        <input
+          placeholder="Counter address"
+          value={counterAddress}
+          onChange={(e) => {
+            setCounterAddress(e.target.value);
+          }}
+        />
+
         <button
           disabled={isPending || isConfirming}
           onClick={() =>
             writeContract({
-              address: CONTRACT_ADDRESS,
+              address: counterAddress as `0x${string}`,
               abi: abi,
               functionName: "inc",
             })
@@ -64,7 +79,7 @@ function CounterPage() {
           disabled={isPending || isConfirming || count?.toString() === "0"}
           onClick={() =>
             writeContract({
-              address: CONTRACT_ADDRESS,
+              address: counterAddress as `0x${string}`,
               abi: abi,
               functionName: "dec",
             })
