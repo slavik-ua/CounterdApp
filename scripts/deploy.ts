@@ -6,7 +6,7 @@ async function main() {
   const counter = await viem.deployContract("Counter");
   console.log(`Counter contract successfully deployed to: ${counter.address}`);
 
-  const token = await viem.deployContract("Token", ["NewToken", "NTK"]);
+  const token = await viem.deployContract("Token", []);
   console.log(`Token deployed to ${token.address}`);
 }
 

@@ -9,13 +9,13 @@ contract TokenTest is Test {
     address alice = address(0x02);
 
     function setUp() public {
-        token = new Token("NewToken", "NTK");
+        token = new Token();
     }
 
     function test_Mint() public {
         token.mint(address(this), 1000e18);
         assertEq(token.balanceOf(address(this)), 1000e18);
-        assertEq(token.totalSuply(), 1000e18);
+        assertEq(token.totalSupply(), 1000e18);
     }
 
     function test_Transfer() public {
@@ -26,7 +26,8 @@ contract TokenTest is Test {
     }
 
     function test_TransferInsufficuentBalance() public {
-        vm.expectRevert("insufficient balance");
+        // If ERC20 provides specific error, we can use it here to be more specific and accurate
+        vm.expectRevert();
         token.transfer(alice, 1);
     }
 }

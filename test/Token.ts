@@ -6,7 +6,7 @@ describe("Token", async () => {
   const { viem, networkHelpers } = await network.create();
 
   async function deployToken() {
-    const token = await viem.deployContract("Token", ["NewToken", "NTK"]);
+    const token = await viem.deployContract("Token", []);
     return { token };
   }
 
