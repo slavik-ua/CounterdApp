@@ -37,7 +37,7 @@ If the addresses are different from
 `0x5fbdb2315678afecb367f032d93f642f64180aa3`
 `0xe7f1725e7734ce288f8367e1bb143e90bb3f0512`
 
-Copy the printed addresses and update it in `frontend/src/Pages/CounterPage.tsx`. The Token hash **can be updated in the UI** or in the `frontend/src/Pages/CounterPage.tsx`.
+Copy the printed addresses and update it in `frontend/src/Pages/CounterPage.tsx`. The Token hash **can be updated in the UI** or in the `frontend/src/Pages/TokenPage.tsx`.
 
 ### Run the frontend
 
