@@ -5,32 +5,7 @@ import {
 } from "wagmi";
 import { useEffect } from "react";
 
-const CONTRACT_ABI = [
-  // --- Variables ---
-  {
-    type: "function",
-    name: "x",
-    inputs: [],
-    outputs: [{ internalType: "uint256", name: "", type: "uint256" }],
-    stateMutability: "view",
-  },
-
-  // --- Methods ---
-  {
-    type: "function",
-    name: "inc",
-    inputs: [],
-    outputs: [],
-    stateMutability: "nonpayable",
-  },
-  {
-    type: "function",
-    name: "dec",
-    inputs: [],
-    outputs: [],
-    stateMutability: "nonpayable",
-  },
-] as const;
+import { abi } from "../../../artifacts/contracts/Counter.sol/Counter.json";
 
 // Default address from Hardhat node
 const CONTRACT_ADDRESS =
@@ -43,7 +18,7 @@ function CounterPage() {
     error: readError,
   } = useReadContract({
     address: CONTRACT_ADDRESS,
-    abi: CONTRACT_ABI,
+    abi: abi,
     functionName: "x",
   });
 
@@ -65,7 +40,7 @@ function CounterPage() {
       <h3>Counter</h3>
       <p>
         Value:{" "}
-        <strong>{count !== undefined ? count.toString() : "Loading"}</strong>
+        <strong>{count !== undefined ? count?.toString() : "Loading"}</strong>
       </p>
       {readError && (
         <p style={{ color: "red" }}>Read Error: {readError.message}</p>
@@ -77,7 +52,7 @@ function CounterPage() {
           onClick={() =>
             writeContract({
               address: CONTRACT_ADDRESS,
-              abi: CONTRACT_ABI,
+              abi: abi,
               functionName: "inc",
             })
           }
@@ -90,7 +65,7 @@ function CounterPage() {
           onClick={() =>
             writeContract({
               address: CONTRACT_ADDRESS,
-              abi: CONTRACT_ABI,
+              abi: abi,
               functionName: "dec",
             })
           }
