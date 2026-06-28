@@ -2,13 +2,6 @@
 
 A full-stack dApp with Solidity smart contracts, Hardhat 3 testing, and a React frontend (wagmi).
 
-## Contracts
-
-| Contract | File | Description |
-|----------|------|-------------|
-| **Counter** | `contracts/Counter.sol` | Simple counter |
-| **Token** | `contracts/Token.sol` | ERC20 token |
-
 ## Setup
 
 ### Prerequisites
@@ -72,6 +65,7 @@ Open the URL shown (usually `http://localhost:5173`).
 - **Hardhat + Typescript**: Were chosen because of the amount of information avaialable and strict typesafety which allows for early bug detection. Hardhat is a popular tool to compile contracts, deploy them on the local test network and run solidity tests.
 - **Vite and React**: Were chosed for the frontend because they are the most popular and have the most documentation available on them.
 - **wagmi**: Chosen as the popular library to handle wallet connection to the frontend.
+- **@openzeppelin**: solidity erc20 token library. Was chosen because that is the most common way to it, as it provides all methods ready like balanceOf, mint and we just inherit from that contract.
 
 ## Testing
 
@@ -85,3 +79,7 @@ Selectively run Solidity or TypeScript tests:
 npx hardhat test solidity
 npx hardhat test nodejs
 ```
+
+Tests are located in
+- `./contracts/*.t.sol` - solidity tests
+- `./test/*` - node tests
